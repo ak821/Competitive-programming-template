@@ -1,0 +1,61 @@
+#define maxn 100000 // it is the maximum no. of possible states = summation(len(si)) for all i
+
+vector<vector<int>> trie(maxn,vector<int>(26,-1)); // trie[a][b] stores the state(index) of next element after state a pointing to b or -1 if it does not exist
+int f[maxn]; // Failure function used in aho corasick algo
+vector<string> output[maxn]; // output[i] represents a bunch of string ending at state i
+
+void buildtrie(vector<string> s){
+    int state = 1;
+    for(int i = 0; i < s.size() ; ++i ) {
+        int v = 0; // represents curstate
+        for(auto ch : s[i]){
+            int idx = ch - 'a';
+            if(trie[v][idx] == -1) trie[v][idx] = state++;
+            v = trie[v][idx];
+        }
+        output[v].pb(s[i]);
+    }
+    for(int ch = 0 ; ch < 26; ++ch ){ if(trie[0][ch] == -1 ) trie[0][ch] = 0; } // All characters starting at root must point somewhere if it was empty we made it to point to root itself
+}
+//Trie is build
+
+void buildmatchingmachine() { 
+    memset(f,-1,sizeof(f));
+    queue<int> q;
+    for(int ch = 0 ; ch <26 ;++ch ){
+        if(trie[0][ch] != 0){
+            f[trie[0][ch]] = 0;
+            q.push(trie[0][ch]);
+        }
+    }
+    while(!q.empty()){
+        int state = q.front(); q.pop();
+        for(int ch = 0; ch < 26; ++ch ) {
+            if(trie[state][ch]!=-1){
+                int fail = f[state];
+                while(trie[fail][ch]==-1) fail = f[fail];
+                f[trie[state][ch]] = trie[fail][ch];
+                for(auto x : output[trie[fail][ch]]) output[trie[state][ch]].pb(x);
+                q.push(trie[state][ch]);
+            }
+        }
+    }
+}
+int Findnextstate(int curstate,char nextinput){
+    int idx = nextinput - 'a' ;
+    while(trie[curstate][idx]==-1) curstate = f[curstate];
+    return trie[curstate][idx];
+}
+
+int aho_corasick(string text){
+    int state = 0,ans = 0;
+    for(auto ch : text){
+        int idx = ch - 'a';
+        state = Findnextstate(state, ch);
+        ans += output[state].size();
+    }
+    return ans;
+}
+
+
+
