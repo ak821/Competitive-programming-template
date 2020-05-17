@@ -1,0 +1,21 @@
+const int MAX = 10050;
+
+bool vis[MAX];
+vector<int> s; // s contains node in topologically sorted order
+vector<vector<int> > g; // g contains graph
+
+void dfs(int u)
+{
+    vis[u] = 1;
+    for(auto v : g[u]){
+      if(!vis[v]) dfs(v);
+    }
+    s.push_back(u);
+}
+
+void topological_sort(){
+    for (int i = 0; i < n; i++) {
+        if (!vis[i]) dfs(i);
+    }
+    reverse(s.begin(), s.end());
+}
