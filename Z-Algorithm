@@ -1,0 +1,12 @@
+// In Z function Z[i] denotes length of longest prefix starting from ith position
+vector<int> Z;
+
+void Z_function(string s){
+   int n = s.size();
+   Z.resize(n);
+   for(int i = 1,l = 0,r = 0; i < n; ++i ) { // Z[0] = 0 by default
+      if(i<=r) Z[i] = min(r-i+1,Z[i-l]);
+      while(i+Z[i]<n && s[i+Z[i]] == s[Z[i]] ) Z[i]++;
+      if(Z[i] + i -1 > r) r = Z[i] + i - 1 , l = i ;
+   }
+}
