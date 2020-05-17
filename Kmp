@@ -1,0 +1,13 @@
+// Knuth morris pratt alorithm for string matching or for getting longest proper suffix which is also a prefix(pi[n] function)
+vector<int> pi;
+
+void kmp(string s){
+  int n = s.size();
+  pi.resize(n);
+  for(int i = 1; i < n; ++i ) { // pi[0] = 0 by default
+     int j = pi[i-1];
+     while(j>0 && s[i]!=s[j]) j = pi[j-1];
+     if(s[i]==s[j]) pi[i] = j+1;
+     else pi[i] = 0;
+  }
+}
