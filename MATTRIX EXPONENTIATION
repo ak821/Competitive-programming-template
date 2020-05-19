@@ -1,0 +1,25 @@
+
+
+vector<vector<ll> > mtrx;
+
+//Multiplies two matrix a and b in O(N^3) time complexity and returns the result matrix
+vector<vector<ll> > mul (vector<vector<ll>> a , vector<vector<ll>> b) { 
+    vector<vector<ll> > res (a.size(), vector<ll> ( b[0].size() ));
+    for(int i=0;i<a.size();++i){
+        for(int j = 0; j < b[0].size() ; ++j ) {
+            for(int k = 0; k <b.size() ; ++k ) {
+                res[i][j] +=  a[i][k] * b[k][j] ;
+            }
+        }
+    }
+    return res;
+}
+ 
+// Finds matrix b raised to power po in O(log(po)) time  CAUTION po > 0 
+vector<vector<ll> > matrixpow(vector<vector<ll> > b,ll po){
+    if(po==1) return b;
+    vector<vector<ll>> p = matrixpow(b, po/2);
+    p = mul(p,p);
+    if(po&1)  p = mul(p,b);
+    return p;
+}
