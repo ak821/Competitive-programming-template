@@ -1,0 +1,27 @@
+// we will colour adjacent elements with different colours and check if it is possible to do so or not
+// Defination of bipartite graph  A Bipartite Graph is a graph whose vertices can be divided into two independent sets, 
+//                                U and V such that every edge (u, v) either connects a vertex from U to V or a vertex from V to U
+vector<vector<int>> g;
+vector<int> clr(maxn,0); // It also represents visited array
+bool ok = 1;
+int c = 1;
+void dfs(int v){
+    clr[v] = c;
+    c = c==1 ? 2 : 1;
+    for(auto b : g[v]){
+        if(!clr[b]) dfs(b);
+        else if(clr[b]==clr[v]) ok = false;
+    }
+}
+
+bool is_bipartite(){
+    c = 1;
+    for(int i = 0; i < n; ++i){
+        if(!clr[v]){ 
+            dfs(v); 
+            if(!ok) return false; 
+            c = 1; 
+        }
+    }
+    return true;
+}
