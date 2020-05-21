@@ -1,0 +1,21 @@
+// phi(n) = n*(1-1/p1)*(1-1/p2)*......(1-1/pm); where p1,p2,.....pm are distinct prime factors of n 
+
+
+vector<int> phi;
+void phi1_to_n(int n) 
+{
+    phi.resize(n+1);
+    for(int i = 0; i <= n; ++i ) phi[i] = i;
+    
+    for (int p=2; p<=n; ++p) 
+    { 
+        if (phi[i]==i) 
+        {
+            for (int i=2*p; i<=n; i += p) 
+                phi[i] -= phi[i]/p; 
+        } 
+    } 
+}
+
+// Calcutes phi(1 to n) in O(nloglogn) time. also for gcd(a,n) = 1, a^phi(n) = 1 (mod n)
+// Therefore for large nos. x a^x = a^(x mod(phi(n) ) (mod n)
