@@ -18,7 +18,7 @@
 }
 ll powmod(ll a,ll b,ll mod) {ll res=1%mod; assert(b>=0); for(;b;b>>=1){if(b&1)res=res*a%mod;a=a*a%mod;}return res%mod;}
 
-int primitive root(int n){
+int primitive_root(int n){
      int p = phi(n), x = p;
      vector<int> fac;
      for(int i = 2; i*i <= x; ++i ){
