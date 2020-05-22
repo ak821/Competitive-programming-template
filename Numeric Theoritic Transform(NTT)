@@ -1,6 +1,8 @@
 /*
   If modulo is required for some prime p = c*2^k + 1 ; Then wn = g^c is the value of 2^k th root mod p where g is some primitive root of p
   As (g^c)^2^k = g ^(c*2^k) = g^(phi(p)-1) = 1(mod p)
+  Here in implementation modinverse function needs to be added separately
+
   */
 
 
@@ -39,7 +41,7 @@ void fft(vector<int> & a, bool invert) {
     }
 
     if (invert) {
-        int n_1 = inverse(n, mod);
+        int n_1 = inverse(n, mod); // Or can also use powmod(n,mod-2)
         for (int & x : a)
             x = (int)(1LL * x * n_1 % mod);
     }
