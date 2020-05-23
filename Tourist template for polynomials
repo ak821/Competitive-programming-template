@@ -531,6 +531,18 @@ void evaluate(vector<vector<T>> tree,int v, int st,int en, vector<T> &x,vector<T
 }
 
 template<typename T>
+void ievaluate(vector<vector<T>> tree,int v, int st,int en, vector<T> &x,vector<T> prod,vector<T> req){
+    if(st==en){
+        x += vector<T>{req[st]} * prod;
+        return;
+    }
+    int mid = (st+en)/2;
+    ievaluate(tree,2*v,st,mid,x,prod*tree[2*v+1],req);
+    ievaluate(tree,2*v+1,mid+1,en,x,prod*tree[2*v],req);
+}
+
+
+template<typename T>
 void build(vector<vector<T>> &tree,int v, int st,int en,const vector<T> &x){
     if(st==en){
         vector<T> temp(2); temp[0] = -1*x[st]; temp[1] = 1;
@@ -554,6 +566,23 @@ vector<T> evalfast(vector<T> x,const vector<T> p){ // Evaluates polynomial p at 
 	build(tree, 1, 0,n-1,x);
 	evaluate(tree,1,0,n-1,res,p);
 	return res;
+}
+
+template<typename T>
+vector<T> interpolation(vector<T> x,vector<T> y){  // Calculates polynomial of degree n such that f(x) = y for each integer in vector x & y
+    int n = x.size();
+    if(!n || n!=y.size()) {
+		return vector<T>(n, T(0));
+	}
+    vector< vector<T> > tree(4*n);
+    build(tree,1,0,n-1,x);
+    vector<T> res;
+    vector<T> P = tree[2]*tree[3];
+    P = derivative(P);
+    P = evalfast(x, P);
+    for(int i =0;i<n;++i) y[i] /= P[i];
+    ievaluate(tree,1,0,n-1,res,vector<T>{1},y);
+    return res;
 }
 
 /*
