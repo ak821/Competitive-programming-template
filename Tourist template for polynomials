@@ -517,6 +517,45 @@ vector<T> sqrt(const vector<T>& a) {
   b.resize(n);
   return b;
 }
+// Calculating value of a polynomial at n arbitary points in O(nlog^2(n))
+
+template<typename T>
+void evaluate(vector<vector<T>> tree,int v, int st,int en, vector<T> &x,vector<T> rem){
+    if(st==en){
+        x[en] = rem[0];
+        return;
+    }
+    int mid = (st+en)/2;
+    evaluate(tree,2*v,st,mid,x,rem%tree[2*v]);
+    evaluate(tree,2*v+1,mid+1,en,x,rem%tree[2*v+1]);
+}
+
+template<typename T>
+void build(vector<vector<T>> &tree,int v, int st,int en,const vector<T> &x){
+    if(st==en){
+        vector<T> temp(2); temp[0] = -1*x[st]; temp[1] = 1;
+        tree[v] = temp;
+        return;
+    }
+    int mid = (st+en)/2;
+    build(tree,2*v,st,mid,x);
+    build(tree,2*v+1,mid+1,en,x);
+    if(v!=1) tree[v] = tree[2*v]*tree[2*v+1];
+}
+
+template <typename T>
+vector<T> evalfast(vector<T> x,const vector<T> p){ // Evaluates polynomial p at (x1,x2,x3,.....,xn) in O(nlog^2(n)) time
+    int n = x.size();
+	if(!n) {
+		return vector<T>(n, T(0));
+	}
+	vector<T> res(n);
+	vector<vector<T>> tree(4*n);
+	build(tree, 1, 0,n-1,x);
+	evaluate(tree,1,0,n-1,res,p);
+	return res;
+}
+
 /*
 NOTE : OUR POLYNOMIAL TYPE IS vector<Mint> EVEN IF WE WANT TO multiply OR DIVIDE THE POLYNOMIAL BY A FIXED
 NUMBER WE SHOULD DO USING vector<Mint>{n} , as type need to be same(it is like multiplying by a polynomial itself)
