@@ -537,7 +537,7 @@ int main() {
       c[x] = 1;
     }
   }
-  vector<Mint> res = invere(sqrt(vector<Mint>{1} - vector<Mint>{4}*c) + vector<Mint>{1})*vector<Mint>{2};
+  vector<Mint> res = inverse(sqrt(vector<Mint>{1} - vector<Mint>{4}*c) + vector<Mint>{1})*vector<Mint>{2};
   vector<Mint> f = inverse(sqrt(c * vector<Mint>{-4} + vector<Mint>{1}) + vector<Mint>{1}) * vector<Mint>{2};
   for (int i = 1; i <= m; i++) {
     cout << f[i] << '\n';
