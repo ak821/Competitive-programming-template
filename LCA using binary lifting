@@ -1,10 +1,10 @@
 // call preprocess(root) for preprocessing in O(Nlog(N)) then lca(u,v) will return lca in O(log N) time
 
 int n, l;
-vector<vector<int>> adj;
-int timer;
-vector<int> tin, tout;
-vector<vector<int>> up;
+vector<vector<int>> adj;  // Stores tree 
+int timer;  // in time and out time
+vector<int> tin, tout;  // Used to check if u is ancestor of v in O(1) time
+vector<vector<int>> up;  // up[i][j] stores 2^j th ancestor of i
 
 void dfs(int v, int p)
 {
