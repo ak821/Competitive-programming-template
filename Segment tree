@@ -1,0 +1,41 @@
+int t[4*maxn];  // Segment tree indexed starting from 1
+
+int make_data(int x){
+    return x;
+}
+int combine(int x,int y){
+    return (x+y);
+}
+
+void build(int a[], int v, int l, int r) {
+    if (l == r) {
+        t[v] = make_data(a[l]);
+    } else {
+        int mid = (l + r) / 2;
+        build(a, v*2, l, mid);
+        build(a, v*2+1, mid+1, r);
+        t[v] = combine(t[v*2], t[v*2+1]);
+    }
+}
+
+void update(int v, int l, int r, int pos, int new_val) {
+    if (l == r) {
+        t[v] = make_data(new_val);
+    } else {
+        int mid = (l + r) / 2;
+        if (pos <= mid)
+            update(v*2, l, mid, pos, new_val);
+        else
+            update(v*2+1, mid+1, r, pos, new_val);
+        t[v] = combine(t[v*2], t[v*2+1]);
+    }
+}
+
+int query(int v, int l, int r, int st, int en) {
+    if(r<st || en<l) return 0;        // range represented by a node is completely outside the given range
+    if(st>=l && en<=r) return t[v];   // range represented by a node is completely inside the given range
+    int mid = (l + r) / 2;
+    int p1 = query(2*v,l,mid,st,en);
+    int p2 = query(2*v+1,mid+1,r,st,en);
+    return (p1+p2);
+}
