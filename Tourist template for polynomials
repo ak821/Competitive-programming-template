@@ -520,7 +520,7 @@ vector<T> sqrt(const vector<T>& a) {
 // Calculating value of a polynomial at n arbitary points in O(nlog^2(n))
 
 template<typename T>
-void evaluate(vector<vector<T>> tree,int v, int st,int en, vector<T> &x,vector<T> rem){
+void evaluate(vector<vector<T>> &tree,int v, int st,int en, vector<T> &x,vector<T> rem){
     if(st==en){
         x[en] = rem[0];
         return;
@@ -556,7 +556,7 @@ void build(vector<vector<T>> &tree,int v, int st,int en,const vector<T> &x){
 }
 
 template <typename T>
-vector<T> evalfast(vector<T> x,const vector<T> p){ // Evaluates polynomial p at (x1,x2,x3,.....,xn) in O(nlog^2(n)) time
+vector<T> evalfast(vector<T> &x,const vector<T> &p){ // Evaluates polynomial p at (x1,x2,x3,.....,xn) in O(nlog^2(n)) time
     int n = x.size();
 	if(!n) {
 		return vector<T>(n, T(0));
