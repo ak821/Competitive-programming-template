@@ -564,7 +564,8 @@ vector<T> evalfast(vector<T> &x,const vector<T> &p){ // Evaluates polynomial p a
 	vector<T> res(n);
 	vector<vector<T>> tree(4*n);
 	build(tree, 1, 0,n-1,x);
-	evaluate(tree,1,0,n-1,res,p);
+	if(n!=1) tree[1] = tree[2]*tree[3]
+	evaluate(tree,1,0,n-1,res,p%tree[1]);
 	return res;
 }
 
