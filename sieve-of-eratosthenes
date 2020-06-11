@@ -8,7 +8,7 @@ void SieveOfEratosthenes(int n)
         {
             spf[p] = p;
             for (int i=p*p; i<=n; i += p) 
-                spf[i] = p; 
+               if(!spf[i]) spf[i] = p; 
         } 
     } 
 }
