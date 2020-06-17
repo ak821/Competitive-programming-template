@@ -1,0 +1,27 @@
+/*
+REMEMBER IT IS NOT THE LONGEST NON DECREASING SUBSEQUENCE 
+
+Link to code : https://cp-algorithms.com/sequences/longest_increasing_subsequence.html
+
+d[i] stores smallest element at which Longest Increasing subsequence of length i ends or infinity if it does not exist
+Observation d[i]<=d[i+1] for all i 
+The element a[i] will only update at most one value d[j]
+*/
+
+int lis ( vector<int>const &a){
+    int n = a.size();
+    int INF = 1e9;
+    vector<int> d(n+1,INF);
+    d[0] = -INF;
+    for(int i=0;i<n;++i){
+        int j = upper_bound(all(a),a[i]) - a.begin();
+        if(a[i] > d[j-1] && a[i] < d[j]) d[j] = a[i];
+    }
+    int ans=0;
+    
+    for(int i=0;i<=n;++i){
+        if(d[i] < INF)
+            ans = i;
+    }
+    return ans;
+}
