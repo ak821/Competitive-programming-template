@@ -1,0 +1,26 @@
+int n;
+vector<vector<int>> adj;
+vector<int> vis,ans;
+bool flag=false;
+
+void dfs(int v){
+    vis[v] = 1;
+    for(int i : adj[v]){
+        if( vis[i] == 1){ flag = 1; break; }
+        else if(!vis[i]) dfs(i);
+        if(flag) return;
+    }
+    vis[v] = 2;
+    ans.pb(v);
+}
+
+void topological_sort(){
+    vis.clear();
+    vis.resize(n);
+    ans.clear();
+    for(int i=0;i<n;++i){
+        dfs(i);
+        if(flag){ ans.clear(); return; }
+    }
+    reverse(all(ans));
+}
