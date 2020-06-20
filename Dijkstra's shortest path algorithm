@@ -1,0 +1,22 @@
+#define INF 1000000000
+
+vector<vector<pii> > adj; // here first part stores node and second stores cost of that edge
+
+void dijkstra(int s, vector<int> &d , vector<int> &p){
+    d.resize(n,INF); p.resize(n); 
+    d[s] = 0; p[s] = -1;
+    priority_queue<pii,vector<pii>,greater<pii>> q;
+    q.push({0,s});
+    while(!q.empty()){
+        int v = q.top().S; 
+        int ds = q.top().F;  q.pop();
+        if(d[v] != ds) continue;
+        for(auto b  :adj[v]){
+            if(d[b.F] > d[v] + b.S){
+                d[b.F] = d[v] + b.S;
+                p[b.F] = v;
+                q.push({d[b.F],b.F});
+            }
+        }
+    }
+}
