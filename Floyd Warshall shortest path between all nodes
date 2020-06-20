@@ -1,0 +1,15 @@
+// O(n^3) algorithm, Graph is stored as adjacency matrix
+
+int d[n+1][n+1];
+for(int i=1;i<=n;++i){
+    for(int j=1j<=n;++j){
+        if(i==j) d[i][j] = 0;
+        if(graph[i][j]) d[i][j] = 1;
+        else d[i][j] = 1e9;
+    }
+}
+
+for(int k=1;k<=n;++i){
+    for(int i=1;i<=n;++i){
+        for(int j=1;j<=n;++j)
+            d[i][j] = min( d[i][j] , d[i][k] + d[k][j] );
