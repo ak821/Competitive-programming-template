@@ -45,13 +45,15 @@ int kruskal(){
         }
     }
     sort(edges.begin(), edges.end());
-    
+    int cnt_nodes=0;
     for (Edge e : edges) {
         if (find(e.u) != find(e.v)) {
+            cnt_nodes++;
             cost += e.weight;
             tree[e.u].pb({e.v,e.weight});
             tree[e.v].pb({e.u,e.weight});
             union_sets(e.u, e.v);
         }
+        if(cnt_nodes == n-1 ) break;
     }
 }
