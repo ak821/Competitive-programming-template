@@ -1,0 +1,47 @@
+#include <iostream>
+using namespace std;
+vector<vector<int>> g,gr,component; // gr is reverse graph(Directed) , component[i] contains nodes in ith component
+vector<bool> vis;
+vector<int> order;
+int cntcomp=0;
+
+void dfs1(int v){
+    vis[v] = 1;
+    for(auto b : g[v]){
+        if(!vis[b]) dfs1(b);
+    }
+    order.pb(v);
+}
+
+void dfs2(int v){
+    vis[v] = 1;
+    component[cntcomp].pb(v);
+    for(auto b : gr[v]){
+        if(!vis[b]) dfs2(b);
+    }
+}
+
+int main() {
+    int  n,m;
+	cin>>n>>m;
+	adj.resize(n); vis.resize(n,0);
+	while(m--){
+	    int u,v;
+	    cin>>u>>>v; --u;--v;
+	    g[u].pb(v);
+	    g[v].pb(u);
+	}
+	for(int i=0;i<n;++i)
+	    if(!vis[i])
+	        dfs1(v);
+	reverse(all(order));
+	vis.assign (n, false);
+	for(int i=0;i<n;++i){
+	    if(!vis[order[i]]){
+	        dfs2(order[i]);
+	        cntcomp++;
+	    }
+	}
+	// Process the components
+	return 0;
+}
