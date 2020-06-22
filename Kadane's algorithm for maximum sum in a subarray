@@ -1,0 +1,11 @@
+int maxSubArraySum(vector<int> &a)  // Handles the case where all elements are negative and returns a negative number there
+{ 
+   int max_so_far = a[0],cur_max = a[0]; 
+   
+   for (int i = 0; i < sz(a); i++) 
+   { 
+        curr_max = max(a[i], curr_max+a[i]); 
+        max_so_far = max(max_so_far, curr_max); 
+   } 
+   return max_so_far; 
+}
