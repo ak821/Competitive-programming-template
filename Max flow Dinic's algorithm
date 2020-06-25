@@ -1,4 +1,4 @@
-struct FlowEdge(){
+struct FlowEdge{
     int u,v;
     ll cap,flow=0;
     FlowEdge(int u, int v, long long cap) : u(u), v(v), cap(cap) {}
