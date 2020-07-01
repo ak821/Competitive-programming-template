@@ -2,13 +2,13 @@ int spf[maxn+1]; // spf[i] gives the smallest prime factor of i
 
 void SieveOfEratosthenes(int n) 
 {
+    for(int p=1;p<=n;++p) spf[p] = p;
     for (int p=2; p*p<=n; p++) 
     { 
-        if (!spf[p]) 
+        if (spf[p] == p)  
         {
-            spf[p] = p;
             for (int i=p*p; i<=n; i += p) 
-               if(!spf[i]) spf[i] = p; 
+               if(spf[i] == i) spf[i] = p; 
         } 
     } 
 }
@@ -16,8 +16,8 @@ void SieveOfEratosthenes(int n)
 vector<int> factorisation(int n){ // n<= maxn
   vector<int> factors;
   while(n){
-    n /= spf[n];
     factors.pb(spf[n]);
+    n /= spf[n];
   }
   return factors;
 }
