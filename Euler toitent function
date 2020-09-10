@@ -9,7 +9,7 @@ void phi1_to_n(int n)
     
     for (int p=2; p<=n; ++p) 
     { 
-        if (phi[i]==i) 
+        if (phi[p]==p) 
         {
             for (int i=2*p; i<=n; i += p) 
                 phi[i] -= phi[i]/p; 
