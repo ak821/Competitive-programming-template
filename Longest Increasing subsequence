@@ -14,7 +14,7 @@ int lis ( vector<int>const &a){
     vector<int> d(n+1,INF);
     d[0] = -INF;
     for(int i=0;i<n;++i){
-        int j = upper_bound(all(a),a[i]) - a.begin();
+        int j = upper_bound(all(d),a[i]) - d.begin();
         if(a[i] > d[j-1] && a[i] < d[j]) d[j] = a[i];
     }
     int ans=0;
